@@ -1,10 +1,8 @@
 import type { DOMWrapper, VueWrapper } from '@vue/test-utils'
-import type { Mock } from 'vitest'
-import { findByText, fireEvent, render } from '@testing-library/vue'
+import { findByText, fireEvent } from '@testing-library/vue'
 import { mount } from '@vue/test-utils'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { axe } from 'vitest-axe'
-import { defineComponent, nextTick } from 'vue'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { defineComponent } from 'vue'
 import { DialogClose, DialogContent, DialogOverlay, DialogRoot, DialogTitle, DialogTrigger } from 'reka-ui'
 
 const OPEN_TEXT = 'Open'
@@ -49,12 +47,6 @@ describe('given a default Dialog', () => {
 
     it('should open the dialog', () => {
       expect(wrapper.html()).toContain(TITLE_TEXT)
-      console.log(wrapper.html())
     })
   })
-
-  // it('should open when trigger is clicked', async () => {
-  //   await trigger.trigger('click')
-  //   expect(wrapper.html()).toContain(TITLE_TEXT)
-  // })
 })

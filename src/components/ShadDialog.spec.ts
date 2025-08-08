@@ -1,4 +1,4 @@
-import type { DOMWrapper, VueWrapper } from '@vue/test-utils'
+import { DOMWrapper, type VueWrapper } from '@vue/test-utils'
 import { fireEvent } from '@testing-library/vue'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -23,6 +23,8 @@ const DialogTest = defineComponent({
 </DialogRoot>`,
 })
 
+const body = new DOMWrapper(document.body)
+
 describe('given a default Dialog', () => {
   let wrapper: VueWrapper<InstanceType<typeof DialogTest>>
   let trigger: DOMWrapper<HTMLElement>
@@ -43,12 +45,13 @@ describe('given a default Dialog', () => {
     beforeEach(async () => {
       await trigger.trigger('click')
       await nextTick()
-      closeButton = wrapper.find('button[data-testid="close-button"]')
+      closeButton = body.find('button[data-testid="close-button"]')
+      expect(closeButton.exists()).toBe(true)
     })
 
     it('should open the dialog', () => {
-      expect(document.body.innerHTML).toContain(TITLE_TEXT)
-      expect(document.body.innerHTML).toContain(DESCRIPTION_TEXT)
+      expect(body.html()).toContain(TITLE_TEXT)
+      expect(body.html()).toContain(DESCRIPTION_TEXT)
     })
   })
 
@@ -56,11 +59,21 @@ describe('given a default Dialog', () => {
     beforeEach(async () => {
       fireEvent.click(trigger.element)
       await nextTick()
+      closeButton = body.find('button[data-testid="close-button"]')
+      console.log(closeButton.html())
     })
 
     it('should open the dialog', () => {
       expect(document.body.innerHTML).toContain(TITLE_TEXT)
       expect(document.body.innerHTML).toContain(DESCRIPTION_TEXT)
+      expect(closeButton.exists()).toBe(true)
+    })
+
+    it('should close the dialog', async () => {
+      await closeButton.trigger('click')
+      await nextTick()
+      expect(document.body.innerHTML).not.toContain(TITLE_TEXT)
+      expect(document.body.innerHTML).not.toContain(DESCRIPTION_TEXT)
     })
   })
 })

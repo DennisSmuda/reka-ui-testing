@@ -16,7 +16,7 @@ const DialogTest = defineComponent({
   <DialogOverlay />
   <DialogContent>
     <DialogTitle>${TITLE_TEXT}</DialogTitle>
-    <DialogClose>${CLOSE_TEXT}</DialogClose>
+    <DialogClose data-testid="close-button">${CLOSE_TEXT}</DialogClose>
   </DialogContent>
 </DialogRoot>`,
 })
@@ -25,6 +25,7 @@ describe('given a default Dialog', () => {
   let wrapper: VueWrapper<InstanceType<typeof DialogTest>>
   let trigger: DOMWrapper<HTMLElement>
   let closeButton: HTMLElement
+  let closeButtonWrapper: DOMWrapper<HTMLElement>
 
   beforeEach(() => {
     document.body.innerHTML = ''
@@ -46,6 +47,8 @@ describe('given a default Dialog', () => {
     it('should open the dialog', () => {
       expect(wrapper.html()).toContain(TITLE_TEXT)
       expect(wrapper.html()).toContain(CLOSE_TEXT)
+      closeButtonWrapper = wrapper.find('button[data-testid="close-button"]')
+      expect(closeButtonWrapper.exists()).toBe(true)
     })
   })
 

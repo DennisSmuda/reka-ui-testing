@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
     "reka-ui": "^2.4.1",
+    "tailwindcss": "^4.1.11",
     "vue": "^3.5.18"
   },
   "devDependencies": {
@@ -19,6 +21,7 @@
     "typescript": "~5.8.3",
     "vite": "^7.1.0",
     "vitest": "^3.2.4",
+    "vitest-axe": "^1.0.0-pre.5",
     "vue-tsc": "^3.0.5"
   }
 }
